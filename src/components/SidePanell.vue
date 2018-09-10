@@ -1,18 +1,10 @@
 <template>
     <div :id="id" class=sidePanell>
         <div class="inputContainer">
-            <vue-google-autocomplete 
-                id="originInput" 
-                classname="form-control" 
-                placeholder="Start typing"
-                v-on:placechanged="setOrigin"/>
+            <map-autocomplete id="originInput" placeholder="Start typing" v-on:placechanged="setOrigin"/>
         </div>
         <div class="inputContainer">
-            <vue-google-autocomplete 
-                id="destInput" 
-                classname="form-control" 
-                placeholder="Start typing"
-                v-on:placechanged="setDestination"/>
+            <map-autocomplete id="destInput" placeholder="Start typing" v-on:placechanged="setDestination"/>
         <button v-on:click="searchRoute">Search</button>
         </div>
 <div ref="directionsPanel" class="directionsPanel"></div>
@@ -21,10 +13,12 @@
 
 <script>
 import VueGoogleAutocomplete from 'vue-google-autocomplete'
+import MapAutocomplete from './MapAutocomplete.vue'
 
 export default {
     components: {
-        VueGoogleAutocomplete
+        VueGoogleAutocomplete,
+        MapAutocomplete
     },
     props: ["id"],
 
@@ -33,11 +27,11 @@ export default {
     },
 
     methods: {
-        setOrigin(addressData, placeResultData){
-            this.$store.commit('setOrigin', {addressData, placeResultData});
+        setOrigin(place){
+            this.$store.commit('setOrigin', place);
         },
-        setDestination(addressData, placeResultData){
-            this.$store.commit('setDestination', {addressData, placeResultData});
+        setDestination(place){
+            this.$store.commit('setDestination', place);
             this.$store.commit('searchRoute');
         },
         searchRoute(){

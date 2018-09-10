@@ -7,12 +7,6 @@ export default {
     
     props: ["id"],
 
-    data(){
-        return {
-            map : null
-        }
-    },
-
     mounted(){
         this.$store.commit('initMap', this.$refs.mapDiv);
         this.$store.commit('geolocate');

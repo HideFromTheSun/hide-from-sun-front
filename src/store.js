@@ -32,10 +32,15 @@ export default new Vuex.Store({
       state.directionsDisplay.setPanel(divPanel);
     },
 
-    setOrigin(state, {addressData, placeResultData}){
-      state.origin = placeResultData;
-      state.currentPostion = {latitude: addressData.latitude, longitude: addressData.longitude};
-      const location = new google.maps.LatLng(addressData.latitude, addressData.longitude);
+    setOrigin(state, place){
+      state.origin = place;
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+      state.currentPostion = {
+        latitude: lat, 
+        longitude: lng
+      };
+      const location = new google.maps.LatLng(lat, lng);
       state.map.setCenter(location);
     },
 
@@ -49,9 +54,11 @@ export default new Vuex.Store({
         });
     },
 
-    setDestination(state, {addressData, placeResultData}){
-      state.destination = placeResultData;
-      const location = new google.maps.LatLng(addressData.latitude, addressData.longitude);
+    setDestination(state, place){
+      state.destination = place;
+      const lat = place.geometry.location.lat();
+      const lng = place.geometry.location.lng();
+      const location = new google.maps.LatLng(lat, lng);
       state.map.setCenter(location);
     },
 
